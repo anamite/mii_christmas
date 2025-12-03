@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Christmas Eve - Mallus in Ingolstadt</title>
+    <style>
+      * {
+        margin: 0;
+        padding: 0;
+        box-sizing: border-box;
+      }
+
+      body {
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        background: linear-gradient(135deg, #1a472a 0%, #2d5a3d 100%);
+        min-height: 100vh;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 20px;
+        position: relative;
+        overflow-x: hidden;
+      }
+
+      /* Snowflakes Animation */
+      .snowflake {
+        position: fixed;
+        top: -10px;
+        color: white;
+        font-size: 1em;
+        opacity: 0.8;
+        pointer-events: none;
+        animation: fall linear infinite;
+        z-index: 1;
+      }
+
+      @keyframes fall {
+        to {
+          transform: translateY(100vh);
+        }
+      }
+
+      .container {
+        background: white;
+        border-radius: 24px;
+        box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
+        max-width: 500px;
+        width: 100%;
+        padding: 40px;
+        position: relative;
+        z-index: 10;
+        overflow: hidden;
+      }
+
+      .header {
+        text-align: center;
+        margin-bottom: 32px;
+      }
+
+      .logo {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 4px solid #c41e3a;
+        margin-bottom: 16px;
+        box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3);
+      }
+
+      h1 {
+        color: #c41e3a;
+        font-size: 28px;
+        margin-bottom: 8px;
+        font-weight: 700;
+      }
+
+      .event-details {
+        color: #165b33;
+        font-size: 16px;
+        font-weight: 600;
+      }
+
+      .form-group {
+        margin-bottom: 24px;
+      }
+
+      label {
+        display: block;
+        color: #333;
+        font-weight: 600;
+        margin-bottom: 8px;
+        font-size: 14px;
+      }
+
+      .info-text {
+        font-size: 12px;
+        color: #666;
+        font-weight: 400;
+        margin-top: 4px;
+      }
+
+      input[type="text"],
+      input[type="tel"] {
+        width: 100%;
+        padding: 14px;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        font-size: 16px;
+        transition: all 0.3s;
+      }
+
+      input[type="text"]:focus,
+      input[type="tel"]:focus {
+        outline: none;
+        border-color: #c41e3a;
+        box-shadow: 0 0 0 4px rgba(196, 30, 58, 0.1);
+      }
+
+      .counter-group {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        margin-top: 8px;
+      }
+
+      .counter-btn {
+        width: 44px;
+        height: 44px;
+        border: none;
+        border-radius: 12px;
+        background: #c41e3a;
+        color: white;
+        font-size: 24px;
+        cursor: pointer;
+        transition: all 0.3s;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+      }
+
+      .counter-btn:hover {
+        background: #a01729;
+        transform: scale(1.05);
+      }
+
+      .counter-btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: scale(1);
+      }
+
+      .counter-value {
+        font-size: 32px;
+        font-weight: 700;
+        color: #165b33;
+        min-width: 60px;
+        text-align: center;
+      }
+
+      .price-display {
+        background: linear-gradient(135deg, #165b33 0%, #1a472a 100%);
+        color: white;
+        padding: 20px;
+        border-radius: 16px;
+        text-align: center;
+        margin: 24px 0;
+        box-shadow: 0 4px 12px rgba(22, 91, 51, 0.3);
+      }
+
+      .price-label {
+        font-size: 14px;
+        opacity: 0.9;
+        margin-bottom: 8px;
+      }
+
+      .price-amount {
+        font-size: 36px;
+        font-weight: 700;
+      }
+
+      .checkbox-group {
+        display: flex;
+        align-items: flex-start;
+        gap: 12px;
+        margin: 24px 0;
+      }
+
+      input[type="checkbox"] {
+        width: 20px;
+        height: 20px;
+        cursor: pointer;
+        margin-top: 2px;
+        flex-shrink: 0;
+      }
+
+      .checkbox-label {
+        font-size: 14px;
+        color: #333;
+        line-height: 1.5;
+        font-weight: 400;
+      }
+
+      .submit-btn {
+        width: 100%;
+        padding: 16px;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #c41e3a 0%, #a01729 100%);
+        color: white;
+        font-size: 18px;
+        font-weight: 700;
+        cursor: pointer;
+        transition: all 0.3s;
+        box-shadow: 0 4px 12px rgba(196, 30, 58, 0.3);
+      }
+
+      .submit-btn:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(196, 30, 58, 0.4);
+      }
+
+      .submit-btn:disabled {
+        background: #ccc;
+        cursor: not-allowed;
+        transform: none;
+      }
+
+      /* Success Message Styles */
+      .success-message {
+        display: none;
+        animation: slideIn 0.5s ease-out;
+      }
+
+      @keyframes slideIn {
+        from {
+          opacity: 0;
+          transform: translateY(20px);
+        }
+        to {
+          opacity: 1;
+          transform: translateY(0);
+        }
+      }
+
+      .success-container {
+        text-align: center;
+        padding: 0;
+      }
+
+      .success-header {
+        background: linear-gradient(135deg, #165b33 0%, #1a472a 100%);
+        padding: 40px 20px;
+        border-radius: 24px 24px 0 0;
+        color: white;
+      }
+
+      .success-icon {
+        font-size: 80px;
+        line-height: 1;
+        margin-bottom: 20px;
+        animation: bounce 0.8s ease-in-out;
+      }
+
+      @keyframes bounce {
+        0%,
+        100% {
+          transform: translateY(0);
+        }
+        50% {
+          transform: translateY(-20px);
+        }
+      }
+
+      .success-title {
+        font-size: 28px;
+        font-weight: 700;
+        margin-bottom: 8px;
+        color: white;
+      }
+
+      .success-body {
+        background: #f7fff7;
+        padding: 40px 30px;
+        border-radius: 0 0 24px 24px;
+        border-top: 3px solid #165b33;
+      }
+
+      .success-message-text {
+        font-size: 18px;
+        color: #165b33;
+        margin-bottom: 16px;
+        font-weight: 600;
+        line-height: 1.6;
+      }
+
+      .success-subtext {
+        font-size: 15px;
+        color: #333;
+        line-height: 1.8;
+        margin-bottom: 8px;
+      }
+
+      .success-highlight {
+        color: #c41e3a;
+        font-weight: 700;
+      }
+
+      .success-details {
+        background: white;
+        border: 2px dashed #165b33;
+        border-radius: 12px;
+        padding: 20px;
+        margin-top: 24px;
+        color: #333;
+      }
+
+      .details-icon {
+        font-size: 24px;
+        margin-bottom: 12px;
+      }
+
+      .details-text {
+        font-size: 14px;
+        line-height: 1.6;
+        color: #555;
+      }
+
+      .thank-you-text {
+        margin-top: 24px;
+        font-size: 16px;
+        font-weight: 600;
+        color: #165b33;
+      }
+
+      @media (max-width: 600px) {
+        .container {
+          padding: 24px;
+        }
+
+        h1 {
+          font-size: 24px;
+        }
+
+        .event-details {
+          font-size: 14px;
+        }
+
+        .price-amount {
+          font-size: 28px;
+        }
+
+        .success-icon {
+          font-size: 60px;
+        }
+
+        .success-title {
+          font-size: 24px;
+        }
+
+        .success-message-text {
+          font-size: 16px;
+        }
+
+        .success-header {
+          padding: 30px 20px;
+        }
+
+        .success-body {
+          padding: 30px 20px;
+        }
+
+        .success-details {
+          padding: 15px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="header" id="formHeader">
+        <img src="icon.png" alt="Logo" class="logo" />
+        <h1>🎄 Mallus in Ingolstadt 🎄</h1>
+        <div class="event-details">Christmas Eve - 13th December 2025</div>
+      </div>
+
+      <form action="https://submit-form.com/zv2jumcer" id="christmasForm">
+        <div class="form-group">
+          <label for="name">Full Name *</label>
+          <input
+            type="text"
+            id="name"
+            name="Full Name"
+            placeholder="Enter your full name"
+            required
+          />
+        </div>
+
+        <div class="form-group">
+          <label for="phone">Phone Number *</label>
+          <input
+            type="tel"
+            id="phone"
+            name="Phone Number"
+            placeholder="Enter your phone number"
+            required
+          />
+          <div class="info-text">
+            Same as in the WhatsApp group
+          </div>
+        </div>
+
+        <div class="form-group">
+          <label>Number of People *</label>
+          <div class="counter-group">
+            <button
+              type="button"
+              class="counter-btn"
+              id="decrementBtn"
+              disabled
+            >
+              −
+            </button>
+            <div class="counter-value" id="peopleCount">1</div>
+            <button type="button" class="counter-btn" id="incrementBtn">
+              +
+            </button>
+          </div>
+          <input
+            type="hidden"
+            id="numberOfPeople"
+            name="Number of People"
+            value="1"
+          />
+        </div>
+
+        <div class="price-display">
+          <div class="price-label">Total Amount</div>
+          <div class="price-amount" id="totalPrice">12€</div>
+          <input type="hidden" id="totalAmount" name="Total Amount" value="12" />
+        </div>
+
+        <div class="checkbox-group">
+          <input
+            type="checkbox"
+            id="agreement"
+            name="Agreement to Pay"
+            value="Agreed - non-refundable"
+            required
+          />
+          <label for="agreement" class="checkbox-label">
+            I agree to pay the above said amount for the Christmas
+            event and I know that it is non-refundable.
+          </label>
+        </div>
+
+        <button type="submit" class="submit-btn" id="submitBtn">
+          🎅 Submit Registration 🎄
+        </button>
+      </form>
+
+      <div class="success-message" id="successMessage">
+        <div class="success-container">
+          <div class="success-header">
+            <div class="success-icon">✓</div>
+            <div class="success-title">Registration Sent!</div>
+          </div>
+          <div class="success-body">
+            <div class="success-message-text">
+              Thank you for your registration
+            </div>
+            <div class="success-subtext">
+              Your registration has been received successfully.
+            </div>
+            <div class="success-subtext">
+              <span class="success-highlight">
+                We will contact you regarding the payment
+              </span>
+              at the phone number you provided.
+            </div>
+
+
+            <div class="thank-you-text">
+              We look forward to celebrating with you! 🎄
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <script>
+      // Snowflakes
+      function createSnowflake() {
+        const snowflake = document.createElement("div");
+        snowflake.classList.add("snowflake");
+        snowflake.textContent = "❄";
+        snowflake.style.left = Math.random() * 100 + "vw";
+        snowflake.style.animationDuration = Math.random() * 3 + 2 + "s";
+        snowflake.style.opacity = Math.random();
+        snowflake.style.fontSize = Math.random() * 10 + 10 + "px";
+        document.body.appendChild(snowflake);
+
+        setTimeout(() => {
+          snowflake.remove();
+        }, 5000);
+      }
+
+      setInterval(createSnowflake, 300);
+
+      // Counter Logic
+      const decrementBtn = document.getElementById("decrementBtn");
+      const incrementBtn = document.getElementById("incrementBtn");
+      const peopleCountDisplay = document.getElementById("peopleCount");
+      const numberOfPeopleInput = document.getElementById("numberOfPeople");
+      const totalPriceDisplay = document.getElementById("totalPrice");
+      const totalAmountInput = document.getElementById("totalAmount");
+
+      let count = 1;
+      const pricePerPerson = 12;
+
+      function updateDisplay() {
+        peopleCountDisplay.textContent = count;
+        numberOfPeopleInput.value = count;
+        const currentTotalPrice = count * pricePerPerson;
+        totalPriceDisplay.textContent = currentTotalPrice + "€";
+        totalAmountInput.value = currentTotalPrice;
+        decrementBtn.disabled = count <= 1;
+      }
+
+      decrementBtn.addEventListener("click", () => {
+        if (count > 1) {
+          count--;
+          updateDisplay();
+        }
+      });
+
+      incrementBtn.addEventListener("click", () => {
+        count++;
+        updateDisplay();
+      });
+
+      // Form submission using Fetch API
+      const christmasForm = document.getElementById("christmasForm");
+      const submitBtn = document.getElementById("submitBtn");
+      const successMessage = document.getElementById("successMessage");
+      const formHeader = document.getElementById("formHeader");
+
+      christmasForm.addEventListener("submit", async function (e) {
+        e.preventDefault();
+
+        submitBtn.disabled = true;
+        submitBtn.textContent = "Submitting...";
+
+        // Collect form data
+        const formData = new FormData(christmasForm);
+        const data = {};
+        for (let [key, value] of formData.entries()) {
+          data[key] = value;
+        }
+
+        try {
+          const response = await fetch(christmasForm.action, {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify(data),
+          });
+
+          if (response.ok) {
+            christmasForm.style.display = "none";
+            formHeader.style.display = "none";
+            successMessage.style.display = "block";
+          } else {
+            alert(
+              "Oops! Something went wrong with your submission. Please try again."
+            );
+            console.error("Form submission failed:", response.statusText);
+            submitBtn.disabled = false;
+            submitBtn.textContent = "🎅 Submit Registration 🎄";
+          }
+        } catch (error) {
+          console.error("Network error:", error);
+          alert(
+            "A network error occurred. Please check your internet connection and try again."
+          );
+          submitBtn.disabled = false;
+          submitBtn.textContent = "🎅 Submit Registration 🎄";
+        }
+      });
+
+      // Initial display update
+      updateDisplay();
+    </script>
+  </body>
+</html>
