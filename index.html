@@ -100,6 +100,11 @@
         margin-top: 4px;
       }
 
+      .info-text.highlight {
+        color: #c41e3a;
+        font-weight: 500;
+      }
+
       input[type="text"],
       input[type="tel"] {
         width: 100%;
@@ -156,6 +161,48 @@
         color: #165b33;
         min-width: 60px;
         text-align: center;
+      }
+
+      .food-preference-group {
+        display: flex;
+        gap: 12px;
+        margin-top: 8px;
+      }
+
+      .food-option {
+        flex: 1;
+        position: relative;
+      }
+
+      .food-option input[type="radio"] {
+        position: absolute;
+        opacity: 0;
+        pointer-events: none;
+      }
+
+      .food-option label {
+        display: block;
+        padding: 14px;
+        border: 2px solid #e0e0e0;
+        border-radius: 12px;
+        text-align: center;
+        cursor: pointer;
+        transition: all 0.3s;
+        font-weight: 600;
+        font-size: 15px;
+        color: #333;
+      }
+
+      .food-option input[type="radio"]:checked + label {
+        border-color: #165b33;
+        background: linear-gradient(135deg, #165b33 0%, #1a472a 100%);
+        color: white;
+        box-shadow: 0 4px 12px rgba(22, 91, 51, 0.3);
+      }
+
+      .food-option label:hover {
+        border-color: #165b33;
+        transform: translateY(-2px);
       }
 
       .price-display {
@@ -405,9 +452,7 @@
             placeholder="Enter your phone number"
             required
           />
-          <div class="info-text">
-            Same as in the WhatsApp group
-          </div>
+          <div class="info-text">Same as in the WhatsApp group</div>
         </div>
 
         <div class="form-group">
@@ -434,10 +479,43 @@
           />
         </div>
 
+        <div class="form-group">
+          <label>Food Preference *</label>
+          <div class="food-preference-group">
+            <div class="food-option">
+              <input
+                type="radio"
+                id="veg"
+                name="Food Preference"
+                value="Vegetarian"
+                required
+              />
+              <label for="veg">🥗 Vegetarian</label>
+            </div>
+            <div class="food-option">
+              <input
+                type="radio"
+                id="nonveg"
+                name="Food Preference"
+                value="Non-Vegetarian"
+              />
+              <label for="nonveg">🍗 Non-Vegetarian</label>
+            </div>
+          </div>
+          <div class="info-text highlight" id="foodPrefInfo" style="display: none;">
+            ℹ️ All additional members will have the same food preference
+          </div>
+        </div>
+
         <div class="price-display">
           <div class="price-label">Total Amount</div>
           <div class="price-amount" id="totalPrice">12€</div>
-          <input type="hidden" id="totalAmount" name="Total Amount" value="12" />
+          <input
+            type="hidden"
+            id="totalAmount"
+            name="Total Amount"
+            value="12"
+          />
         </div>
 
         <div class="checkbox-group">
@@ -449,8 +527,8 @@
             required
           />
           <label for="agreement" class="checkbox-label">
-            I agree to pay the above said amount for the Christmas
-            event and I know that it is non-refundable.
+            I agree to pay the above said amount for the Christmas event and I
+            know that it is non-refundable.
           </label>
         </div>
 
@@ -478,7 +556,6 @@
               </span>
               at the phone number you provided.
             </div>
-
 
             <div class="thank-you-text">
               We look forward to celebrating with you! 🎄
@@ -514,6 +591,7 @@
       const numberOfPeopleInput = document.getElementById("numberOfPeople");
       const totalPriceDisplay = document.getElementById("totalPrice");
       const totalAmountInput = document.getElementById("totalAmount");
+      const foodPrefInfo = document.getElementById("foodPrefInfo");
 
       let count = 1;
       const pricePerPerson = 12;
@@ -525,6 +603,13 @@
         totalPriceDisplay.textContent = currentTotalPrice + "€";
         totalAmountInput.value = currentTotalPrice;
         decrementBtn.disabled = count <= 1;
+
+        // Show/hide food preference info
+        if (count > 1) {
+          foodPrefInfo.style.display = "block";
+        } else {
+          foodPrefInfo.style.display = "none";
+        }
       }
 
       decrementBtn.addEventListener("click", () => {
