@@ -541,24 +541,25 @@
         <div class="success-container">
           <div class="success-header">
             <div class="success-icon">✓</div>
-            <div class="success-title">Registration Sent!</div>
+            <div class="success-title">Added to Waiting List!</div>
           </div>
           <div class="success-body">
             <div class="success-message-text">
               Thank you for your registration
             </div>
             <div class="success-subtext">
-              Your registration has been received successfully.
+              As the maximum capacity of hall reached,
+              you are now added to the waiting list.
             </div>
             <div class="success-subtext">
               <span class="success-highlight">
-                We will contact you regarding the payment
+                We will contact you regarding your confirmation and payment
               </span>
               at the phone number you provided.
             </div>
 
             <div class="thank-you-text">
-              We look forward to celebrating with you! 🎄
+              Thankyou! 🎄
             </div>
           </div>
         </div>
@@ -663,7 +664,7 @@
             );
             console.error("Form submission failed:", response.statusText);
             submitBtn.disabled = false;
-            submitBtn.textContent = "🎅 Submit Registration 🎄";
+            submitBtn.textContent = "🎅 Add to waiting list 🎄";
           }
         } catch (error) {
           console.error("Network error:", error);
@@ -671,7 +672,7 @@
             "A network error occurred. Please check your internet connection and try again."
           );
           submitBtn.disabled = false;
-          submitBtn.textContent = "🎅 Submit Registration 🎄";
+          submitBtn.textContent = "🎅 Add to waiting list 🎄";
         }
       });
 
